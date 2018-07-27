@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>Events</title>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+    <!-- <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+    <style>
+    /* Custom Stylesheet */
+
+    .icon-block {
+        padding: 0 15px;
+    }
+
+    .icon-block .material-icons {
+        font-size: inherit;
+    }
+    </style>
+</head>
+
+<body>
+    <nav class="black lighten-1" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo" style="font-size:1.6em !important; color: white;"><strong>Group Chat Application(Soft Chat)</strong></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/apiDoc/index.html">API Docs</a></li>
+            </ul>
+            <ul id="nav-mobile" class="side-nav">
+                <li><a href="/apiDoc/index.html">API Docs</a></li>
+            </ul>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+    <div class="section no-pad-bot" style="margin-bottom: 0px" id="index-banner">
+        <div class="container" style="width: 80%">
+          <p style="font-size: 2em; font-weight: 540; text-align: center">Events documentation</p>
+            <div class="row">
+
+                <div class="col hide-on-small-only m3 l2" >
+                    <ul class="section table-of-contents" style="position: fixed;overflow-y: scroll;height: 400px">
+                        <li><a href="#listen" style="color: #03a9f4; font-size: 1.2em; font-weight: bold">Listen</a></li>
+                        <li><a href="#verifyUser">verifyUser</a></li>
+                        <li><a href="#usersList">online-user-list</a></li>
+                        <li><a href="#userId">userId</a></li>
+                        <li><a href="#error-occurred">error-occurred</a></li>
+                        <li><a href="#disconnect">disconnect</a></li>
+                        <li><a href="#authError">auth-error</a></li>
+                        <li><a href="#createdChatroom">created-chatroom</a></li>
+                        <li><a href="#joinedChatroom">joined-chatroom</a></li>
+                        <li><a href="#leavedChatroom">leaved-chatroom</a></li>
+                        <li><a href="#deletedChatroom">deleted-chatroom</a></li>
+                        <li><a href="#getChat">get-chat</a></li>
+                        <li><a href="#listenTyping">typing</a></li>
+                        <li><a href="#emit" style="color: #03a9f4; font-size: 1.2em; font-weight: bold">Emit</a></li>
+                        <li><a href="#set-user">set-user</a></li>
+                        <li><a href="#chat-msg">chat-msg</a></li>
+                        <li><a href="#mark-chat-as-seen">mark-chat-as-seen</a></li>
+                        <li><a href="#create-chat-room">create-chat-room</a></li>
+                        <li><a href="#join-chat-room">join-chat-room</a></li>
+                        <li><a href="#leave-chat-room">leave-chat-room</a></li>
+                        <li><a href="#delete-chat-room">delete-chat-room</a></li>
+                        <li><a href="#share-chat-room">share-chat-room</a></li>
+                        <li><a href="#emitTyping">typing</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="col s12 m9 l10">
+
+                    <div id="listen" class="section scrollspy"></div>
+                    <h4>Events to listen</h4>
+
+                    <div id="verifyUser" class="section scrollspy">
+                        <h5>verifyUser event</h5>
+                        This event <span style="font-weight: 600">("verifyUser")</span> has to be listened on the user's end to verify user authentication.<br/>
+                        user will only be set as online user after verification of authentication token.<br/>
+                    </div>
+                    <div id="usersList" class="section scrollspy">
+                        <h5>online-user-list event</h5>
+                        This event <span style="font-weight: 600">("online-user-list")</span> has to be listened on the user's end to identify all available users that are currently online.<br/>
+                        All available users can be shown to the user based on which he can start chatting with a user.<br/>
+                        The output will be an object, object has key as userId and value as full name.
+                    </div>
+                    <div id="userId" class="section scrollspy">
+                        <h5>userId event</h5>
+                        <span><b>This event's name is actually dynamic and refers to the userId of the logged in user.</b></span><br>
+                        This event <span style="font-weight: 600">("userId")</span> has to be listened to identify an individual chat message that has been received.<br/>
+                        Example output it as follows:<br/>
+                        <pre>
+                            {
+                                chatId: 'unique chat id',
+                                message: 'you message',
+                                createdOn: date, 
+                                receiverId: 'userId of receiver',
+                                receiverName: full name of receiver,
+                                senderId: 'userId of sender',
+                                senderName: 'full name of sender'
+                            }
+                        </pre>
+                    </div>
+                    <div id="error-occurred" class="section scrollspy">
+                        <h5>error-occurred event</h5>
+                        This event <span style="font-weight: 600">("error-occurred")</span> has to be listened to identify an error which will occur when the data is not sent properly in the events to be emitted.<br/>
+                        Example output it as follows:<br/>
+                        <pre>
+                            {
+                                status: 123,
+                                error: 'error message'
+                            }
+                        </pre>
+                    </div>
+                    <div id="disconnect" class="section scrollspy">
+                        <h5>disconnect event (optional)</h5>
+                        This event <span style="font-weight: 600">("disconnect")</span> has to be listened, when the user is disconnected to show proper message.<br/>
+                    </div>
+
+                    <div id="authError" class="section scrollspy">
+                        <h5>Auth Error (optional)</h5>
+                        This event <span style="font-weight: 600">("auth-error")</span> has to be listened, when the user does not have valid auth token to do some tasks.  So that it will show proper message to user.<br/>
+                    </div>
+
+
+                    <div id="createdChatroom" class="section scrollspy">
+                        <h5>created-chatroom Event</h5>
+                        <span><b>This event's is actually designed for listening event message after somone has created the Chat room (Group). </b></span><br>
+                        This event <span style="font-weight: 600">("created-chatroom")</span> has to be listened to identify whetehr the group is created by other user end. After listening to this event update the groups joined list and groups available list as well .<br/>
+                        Example output it as follows:<br/>
+                        <pre>
+                            {
+                                chatRoomId:'unique chat room id',
+                                chatRoomTitle: 'Name of chat room',
+                                chatRoomLink: 'link of chat room',
+                                userId: 'userId of creator',
+                                userName: 'User who have created this chat room', 
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="joinedChatroom" class="section scrollspy">
+                        <h5>joined-chatroom Event</h5>
+                        <span><b>This event's is actually designed for listening event message after somone has joined the Chat room (Group). </b></span><br>
+                        This event <span style="font-weight: 600">("joined-chatroom")</span> has to be listened to identify who joined the group. After listening to this event update the groups joined list and groups available list as well .<br/>
+
+                        Example output it as follows:<br/>
+                        <pre>
+                            {
+                                chatRoomId:'unique chat room id',
+                                chatRoomTitle: 'Name of chat room',
+                                userId: 'userId of joiner',
+                                userName: 'User who have joined this chat room', 
+                            }
+                        </pre>
+                    </div>
+
+
+
+                    <div id="leavedChatroom" class="section scrollspy">
+                        <h5>leaved-chatroom Event</h5>
+                        <span><b>This event's is actually designed for listening event message after somone has leaved the Chat room (Group). </b></span><br>
+                        This event <span style="font-weight: 600">("leaved-chatroom")</span> has to be listened to identify who leaved the group. After listening to this event update the groups joined list and groups available list as well .<br/>
+
+                        Example output it as follows:<br/>
+                        <pre>
+                            {
+                                chatRoomId:'unique chat room id',
+                                chatRoomTitle: 'Name of chat room',
+                                userId: 'userId of user who have leaved the chat room ',
+                                userName: 'User who have leaved this chat room', 
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="deletedChatroom" class="section scrollspy">
+                        <h5>deleted-chatroom Event</h5>
+                        <span><b>This event's is actually designed for listening event message after somone has deleted the Chat room (Group). </b></span><br>
+                        This event <span style="font-weight: 600">("deleted-chatroom")</span> has to be listened to identify who deleted the group. After listening to this event update the groups joined list and groups available list as well .<br/>
+
+                        Example output it as follows:<br/>
+                        <pre>
+                            {
+
+                                chatRoomId:'unique chat room id'
+                                chatRoomTitle: 'Name of chat room',
+                                userId: 'userId of user who have leaved the chat room ',
+                                userName: 'User who have leaved this chat room', 
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="getChat" class="section scrollspy">
+                        <h5>get-chat Event</h5>
+                        <span><b>This event's is actually designed for listening event message and getting message data after user has sent the message to chat room (Group). </b></span><br>
+                        This event <span style="font-weight: 600">("get-chat")</span> has to be listened to identify message details.<br/>
+
+                        Example output it as follows:<br/>
+                        <pre>
+                        {
+                            senderName: 'Sender name who has sent a message',
+                            senderId: 'Id of sender',
+                            receiverName: 'Name of reciever', //for group chat it will be chatroom name
+                            receiverId: 'Id of reciever',     //for group chat it will be chatroom id
+                            message: 'Message that has sent',
+                            chatRoom: 'Id of Chat Room',
+                            chatRoomTitle:'Title of chat Room',
+                            createdOn: 'Date and time of message sent ',
+                            chatId : 'Unique id of chat'
+                        }
+                        </pre>
+                    </div>
+
+                    <div id="listenTyping" class="section scrollspy">
+                        <h5>tping Event</h5>
+                        <span><b>This event's is actually designed for listening who is currently typing the message in the group </b></span><br>
+                        This event <span style="font-weight: 600">("typing")</span> has to be listened to identify who is typing the message.<br/>
+
+                        Example output it as follows:<br/>
+                        <pre>
+                            {
+                            	userName: 'Name of user',
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="emit" class="section scrollspy"></div>
+                    <h4>Events to emit</h4>
+
+                    <div id="set-user" class="section scrollspy">
+                        <h5>set-user event</h5>
+                        This event <span style="font-weight: 600">("set-user")</span> has to be emitted when a user comes online.<br/>
+                        User can only be set as online only after verification of authentication token. Which you have pass here.
+                        The following data has to be emitted<br/>
+                        authentication token
+                    </div>
+                    <div id="chat-msg" class="section scrollspy">
+                        <h5>chat-msg event</h5>
+                        This event <span style="font-weight: 600">("chat-msg")</span> has to be emitted to identify an individual chat message that has been send.<br/>
+                        The following data has to be emitted<br/>
+                        <pre>
+                            {
+                                senderName: 'John Doe',
+                                senderId: 'userId of sender',
+                                receiverName: 'Smith',
+                                receiverId: 'userId of receiver',
+                                message: 'your chat message',
+                                createdOn: date
+                            }
+                        </pre>
+                    </div>
+                    <div id="mark-chat-as-seen" class="section scrollspy">
+                        <h5>mark-chat-as-seen event</h5>
+                        This event <span style="font-weight: 600">("mark-chat-as-seen")</span> has to be emitted, when the user start chat with other user.<br/>
+                        The following data has to be emitted<br/>
+                        <pre>
+                            {
+                                userId: 'userId of user',
+                                senderId: 'userId of user from whom current user is chatting'
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="create-chat-room" class="section scrollspy">
+                        <h5>create-chat-room Event</h5>
+                        This event <span style="font-weight: 600">("create-chat-room")</span> has to be emitted to create the chat room . <br/>
+
+                        The following data has to be emitted<br/>
+                        <pre>
+                            {
+                                chatRoomTitle: 'Name of chat room',
+                                chatRoomLink: 'link of chat room',
+                                userId: 'userId of creator',
+                                userName: 'User who have created this chat room', 
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="join-chat-room" class="section scrollspy">
+                        <h5>join-chat-room Event</h5>
+                        This event <span style="font-weight: 600">("join-chat-room")</span> has to be emitted to join the chat room . <br/>
+
+                        The following data has to be emitted<br/>
+                        <pre>
+                            {
+                                chatRoomId:'unique chat room id'
+                                chatRoomTitle: 'Name of chat room',
+                                userId: 'userId of creator',
+                                userName: 'User who have created this chat room', 
+                            }
+                        </pre>
+                    </div>
+
+
+                    <div id="leave-chat-room" class="section scrollspy">
+                        <h5>leave-chat-room Event</h5>
+                        This event <span style="font-weight: 600">("leave-chat-room")</span> has to be emitted to leave the chat room . <br/>
+
+                        The following data has to be emitted<br/>
+                        <pre>
+                            {
+                                chatRoomId:'unique chat room id'
+                                chatRoomTitle: 'Name of chat room',
+                                userId: 'userId of creator',
+                                userName: 'User who have created this chat room', 
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="delete-chat-room" class="section scrollspy">
+                        <h5>delete-chat-room Event</h5>
+                        This event <span style="font-weight: 600">("delete-chat-room")</span> has to be emitted to delete the chat room . <br/>
+
+                        The following data has to be emitted<br/>
+                        <pre>
+                            {
+                                chatRoomId:'unique chat room id'
+                                chatRoomTitle: 'Name of chat room',
+                                userId: 'userId of creator',
+                                userName: 'User who have created this chat room', 
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="share-chat-room" class="section scrollspy">
+                        <h5>share-chat-room Event</h5>
+                        This event <span style="font-weight: 600">("share-chat-room")</span> has to be emitted to share the chat room link via email. <br/>
+
+                        The following data has to be emitted<br/>
+                        <pre>
+                            {
+                            	emailId: 'Email id of User to whom you would like to send invite to join chat room',
+                            	senderName: 'Name of sender',
+                            	chatRoomTitle: 'Name of Chat Room',
+                            	chatRoomLink: 'Link of Chat Room',
+                            	chatCreatedBy: 'Name of Admin who have created the chat Room',
+                            	baseUrlApplication:'Url of application ' //in terms of localhost it should be 'http://localhost:4200'
+                            }
+                        </pre>
+                    </div>
+
+                    <div id="emitTyping" class="section scrollspy">
+                        <h5>typing Event</h5>
+                        This event <span style="font-weight: 600">("typing")</span> has to be emitted to identify who is typing the message.<br/>
+
+                        The following data has to be emitted<br/>
+                        <pre>
+                            {
+                            	userName: 'Name of user',
+                            }
+                        </pre>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+<br/><br/><br/><br/>
+        <footer style="background-color: black; min-height: 3em">
+            <center style="color: white; margin: auto; padding-top: 1em;">COPYRIGHT &copy<span>2017</span> Soft Chat</center>
+        </footer>
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.scrollspy').scrollSpy();
+    });
+    </script>
+    <script>
+    (function($) {
+        $(function() {
+
+            $('.button-collapse').sideNav();
+
+        }); // end of document ready
+    })(jQuery); // end of jQuery name space
+    </script>
+</body>
+
+</html>
